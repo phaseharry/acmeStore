@@ -1,0 +1,19 @@
+{
+  "name": "acmeStore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4",
+    "pg": "^7.5.0",
+    "sequelize": "^4.39.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start:dev": "DATABASE_URL=postgres://localhost/acmestore nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
