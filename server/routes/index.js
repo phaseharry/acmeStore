@@ -51,7 +51,7 @@ router.delete('/orders/:orderId/lineItems/:id', (req, res, next) => {
 
 //create line item 
 router.post('/orders/:orderId/lineItems', (req, res, next) => {
-    LineItem.create({ orderId: req.params.orderId, quantity: req.body.quantity, productId: req.body.productID})
+    LineItem.create({ orderId: req.params.orderId, quantity: req.body.quantity, productId: req.body.productId})
     .then(lineItem => res.send(lineItem))
     .catch(next)
 })
