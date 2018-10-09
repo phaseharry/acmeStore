@@ -28,6 +28,8 @@
   "devDependencies": {},
   "scripts": {
     "webpack": "./node_modules/webpack/bin/webpack.js",
+    "start": "node app.js",
+    "postinstall": "npm run webpack",
     "start:dev": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost/acmestore nodemon app.js --ignore src/ --ignore dist"
   },
   "keywords": [],
