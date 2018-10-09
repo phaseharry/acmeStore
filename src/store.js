@@ -5,13 +5,18 @@ import axios from 'axios'
 
 //action types
 const LOAD_DATA= "LOAD_DATA"
+// const LOAD_PRODUCTS = "LOAD_PRODUCTS"
+const LOAD_ORDERS = 'LOAD_ORDERS'
 const CREATE_LINEITEM = 'CREATE_LINEITEM'
 const DELETE_LINEITEM = 'DELETE_LINEITEM'
 const INCREMENT_LINEITEM = 'INCREMENT_LINEITEM'
 const DECREMENT_LINEITEM = 'DECREMENT_LINEITEM'
+const SUBMIT_ORDER = 'SUBMIT_ORDER'
 
 //action creators
 const _loadData= (products, orders) => ({type: LOAD_DATA, products, orders})
+//const _loadProducts = products => ({type: LOAD_PRODUCTS, products})
+const _submitOrder = orders => ({type: SUBMIT_ORDER, orders})
 const _createLineItem = lineItem => ({type: CREATE_LINEITEM, lineItem})
 const _deleteLineItem = (orderId,id) => ({type:DELETE_LINEITEM, id, orderId})
 const _incrementLineItem = lineItem => ({type: INCREMENT_LINEITEM, lineItem})
@@ -25,6 +30,21 @@ export const loadData = () => {
         dispatch(_loadData(products.data, orders.data))
     }
 } 
+/*
+export const loadProducts = () => {
+    return async dispatch => {
+        const products = await axios.get('/api/products')
+        dispatch(_loadProducts(products.data))
+    }
+}
+*/
+
+// export const loadOrders = () => {
+//     return async dispatch => {
+//         const orders = await axios.get('/api/orders')
+//         dispatch(_loadOrders(orders.data))
+//     }
+// }
 
 export const createLineItem = (productId, orderId) => {
     // console.log(productId, orderId)
@@ -56,6 +76,17 @@ export const decrementLineItem = lineItem => {
         lineItem.quantity -= 1;
         const updatedItem = await axios.put(`/api/orders/${lineItem.orderId}/lineItems/${lineItem.id}`, {quantity : lineItem.quantity})
         dispatch(_decrementLineItem(updatedItem.data))
+    }
+}
+
+export const submitOrder = (order, history) => {
+    //console.log(order)
+    return async dispatch => {
+        order.status = 'ORDER'
+        const submitted = await axios.put(`/api/orders/${order.id}`, order);
+        const orders = await axios.get('/api/orders')
+        dispatch(_submitOrder(orders.data))
+        history.push('/orders')
     }
 }
 
@@ -100,6 +131,10 @@ const reducer = (state = {products: [], orders: []}, action) => {
                 }
                 return order
             })}
+        case SUBMIT_ORDER: 
+            return {...state, orders: action.orders}
+        // case LOAD_PRODUCTS: 
+        //     return {...state, products: action.products}
         case LOAD_DATA: 
             return {...state, products: action.products, orders: action.orders}
         default:

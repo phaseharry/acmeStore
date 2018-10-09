@@ -58,6 +58,7 @@ router.post('/orders/:orderId/lineItems', (req, res, next) => {
 
 //update order
 router.put('/orders/:id', (req, res, next) => {
+    console.log(req.body)
     Order.findById(req.params.id)
     .then(order => order.update(req.body))
     .then(order => res.send(order))

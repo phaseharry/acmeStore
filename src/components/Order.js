@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Product from './Product'
-import { createLineItem, deleteLineItem, incrementLineItem, decrementLineItem } from '../store'
+import { createLineItem, deleteLineItem, incrementLineItem, decrementLineItem, submitOrder } from '../store'
 
 class Order extends React.Component{
     constructor(){
@@ -13,11 +13,11 @@ class Order extends React.Component{
     }
 
     render(){
-        const {products, createLineItem, deleteLineItem, incrementLineItem, decrementLineItem} = this.props
+        const {products, createLineItem, deleteLineItem, incrementLineItem, decrementLineItem, submitOrder, history} = this.props
         const cart = this.findCart() || {}
+        console.log(cart)
         const lineItems = cart.lineItems? cart.lineItems : []
         // console.log(lineItems)
-        
         return (
             <div>
                 {products.map(product => {
@@ -29,6 +29,7 @@ class Order extends React.Component{
                    // console.log(currentLineItem)
                     return <Product key={product.id} product={product} createLineItem={createLineItem} deleteLineItem={deleteLineItem} increment={incrementLineItem} decrement={decrementLineItem} orderId={cart.id} lineItem={currentLineItem}/>
                 })}
+                <button type='button' onClick={() => submitOrder(cart, history)}>Submit Order</button>
             </div>
         )
     }
@@ -46,7 +47,8 @@ const mapDispatchToProps = dispatch => {
         createLineItem : (productId, orderId) => dispatch(createLineItem(productId, orderId)),
         deleteLineItem : (orderId, id) => dispatch(deleteLineItem(orderId, id)),
         incrementLineItem : lineItem => dispatch(incrementLineItem(lineItem)),
-        decrementLineItem: lineItem => dispatch(decrementLineItem(lineItem))
+        decrementLineItem: lineItem => dispatch(decrementLineItem(lineItem)),
+        submitOrder: (order, history) => dispatch(submitOrder(order, history))
     }
 }
 
