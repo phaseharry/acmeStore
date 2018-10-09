@@ -11,7 +11,6 @@ class Order extends React.Component{
     findCart(){
         return this.props.orders.find(order => order.status === 'CART')
     }
-
     render(){
         const {products, createLineItem, deleteLineItem, incrementLineItem, decrementLineItem, submitOrder, history} = this.props
         const cart = this.findCart() || {}
@@ -20,16 +19,19 @@ class Order extends React.Component{
         // console.log(lineItems)
         return (
             <div>
-                {products.map(product => {
-                    //console.log(product)
-                    const currentLineItem = lineItems.find(lineItem => {
-                        //console.log(lineItem)
-                        return lineItem.productId === product.id
-                    }) || {}
-                   // console.log(currentLineItem)
-                    return <Product key={product.id} product={product} createLineItem={createLineItem} deleteLineItem={deleteLineItem} increment={incrementLineItem} decrement={decrementLineItem} orderId={cart.id} lineItem={currentLineItem}/>
-                })}
-                <button type='button' onClick={() => submitOrder(cart, history)}>Submit Order</button>
+                <h4>Products</h4>
+                <div className='flexing'>
+                    {products.map(product => {
+                        //console.log(product)
+                        const currentLineItem = lineItems.find(lineItem => {
+                            //console.log(lineItem)
+                            return lineItem.productId === product.id
+                        }) || {}
+                    // console.log(currentLineItem)
+                        return <Product key={product.id} product={product} createLineItem={createLineItem} deleteLineItem={deleteLineItem} increment={incrementLineItem} decrement={decrementLineItem} orderId={cart.id} lineItem={currentLineItem}/>
+                    })}
+                </div>
+                <button className='btn btn-primary' id='submitButton' type='button' onClick={() => submitOrder(cart, history)}>Submit Order</button>
             </div>
         )
     }

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import IndividualOrder from './IndividualOrder'
 
 class PastOrders extends React.Component{
-
     render(){
         const { orders, products } = this.props
         const pastOrders = orders.filter(order => order.status !== 'CART')

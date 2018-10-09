@@ -4,24 +4,26 @@ const IndividualOrder = props => {
     const { order, products } = props
     console.log(order)
     return (
-        <div>
-            <p>{order.id}</p>
-            <ul>       
-                {   
-                    products.map(product => {
-                        const totalCount = order.lineItems.reduce((total, item) => {
-                            if(item.productId === product.id){
-                                return total + item.quantity
-                            }
-                            return total
-                        }, 0)
+        <div className='card'>
+            <p>Order# {order.id}</p>
+            <div>
+                <ul className='list-group'>       
+                    {   
+                        products.map(product => {
+                            const totalCount = order.lineItems.reduce((total, item) => {
+                                if(item.productId === product.id){
+                                    return total + item.quantity
+                                }
+                                return total
+                            }, 0)
 
-                        return (
-                            <li key={product.id}>{product.name} <span>{totalCount}</span></li>
-                        )
-                    })
-                }         
-            </ul>
+                            return (
+                                <li className='list-group-item' key={product.id}>{product.name} <span className='badge badge-primary productCount'>{totalCount}</span></li>
+                            )
+                        })
+                    }         
+                </ul>
+            </div>
        </div>
     )
 }

@@ -1,0 +1,16 @@
+.flexing {
+    display: flex;
+    justify-content: space-around;
+}
+
+.product {
+    width: 150px;
+}
+
+#submitButton {
+    margin-top: 10px
+}
+
+.productCount {
+    float: right;
+}

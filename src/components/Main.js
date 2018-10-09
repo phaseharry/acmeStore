@@ -28,12 +28,12 @@ class Main extends React.Component{
     render(){
        const totalItemsSold = this.findTotalSales()
        return (
-       <div>
+       <div className='container'>
             <h4>Acme Store</h4>
             <Router>
                 <div>
                     <NavBar />
-                    <span>{`${totalItemsSold} items has been sold`}</span>
+                    <div className='alert alert-success'>{`${totalItemsSold} items has been sold`}</div>
                     <Route path='/cart' render={(props) => <Order {...props}/>}/>
                     <Route path='/orders' render={(props) => <PastOrders {...props}/>} />
                 </div>
