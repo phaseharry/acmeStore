@@ -64,8 +64,17 @@ const syncAndSeed = () => {
                 // imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGHAztkkoXC93LMNU9syd_cmUSkS3bpN213nks-nlu1cDIivs-'
             })
         ])
-       
+        .then(([iPhone, Pixel, Samsung, P20]) => {
+            return Order.create({status: 'CART'})
+            .then( order => {
+                return Promise.all([
+                    LineItem.create({ productId: iPhone.id, orderId: order.id}),
+                    LineItem.create({ productId: Pixel.id, orderId: order.id})
+                ])
+            })
+        })
     })
+
 }
 
 module.exports = {

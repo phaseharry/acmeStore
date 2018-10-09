@@ -30,7 +30,7 @@ router.get('/orders', async (req, res, next) => {
 })
 
 //update line item
-router.put('orders/:orderId/lineItems/:id', (req, res, next) => {
+router.put('/orders/:orderId/lineItems/:id', (req, res, next) => {
     LineItem.findById(req.params.id)
     .then(lineItem => lineItem.update(req.body))
     .then(lineItem => res.send(lineItem))

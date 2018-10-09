@@ -20,7 +20,11 @@ class NavBar extends React.Component{
                     <Link to='/' className='nav-link'>Home</Link>
                 </li>
                 <li className='nav-item'>
-                    <Link to='/cart' className='nav-link'>Cart ({lineItemsInCart.length})</Link>
+                    <Link to='/cart' className='nav-link'>Cart ({
+                        lineItemsInCart.reduce((total, item) => {
+                            return total + item.quantity
+                        }, 0)
+                    })</Link>
                 </li>
                 <li className='nav-item'>
                     <Link to='/orders' className='nav-link'>Orders ({orders.length - 1})</Link>

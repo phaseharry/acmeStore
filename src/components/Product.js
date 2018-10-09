@@ -4,16 +4,17 @@ import { connect } from 'react-redux'
 class Product extends React.Component{
 
     render(){
-        const { product, orderId, lineItems, createLineItem, deleteLineItem} = this.props
-        const lastItem = lineItems[lineItems.length - 1] || {}
+        const { product, orderId, lineItem, createLineItem, deleteLineItem, increment, decrement} = this.props
+        const numberInCart = lineItem.quantity || 0
+        // console.log(lineItem)
         return (
                 <div>
                     <span>{product.name}</span>
-                    <p>{`${lineItems.length} ordered`}</p>
+                    <p>{`${numberInCart} ordered`}</p>
                     {/* <img src={product.imgUrl}></img> */}
                     
-                    <button onClick={() => createLineItem(product.id, orderId)}>Add</button>
-                    <button type='button' disabled={lineItems.length > 0? false : true} onClick={() => deleteLineItem(orderId, lastItem.id)}>Remove</button>
+                    <button onClick={numberInCart < 1 ? () => createLineItem(product.id, orderId) : () => increment(lineItem)}>Add</button>
+                    <button type='button' disabled={numberInCart < 1?  true : false} onClick={numberInCart > 1? () => decrement(lineItem) : () => deleteLineItem(orderId, lineItem.id)}>Remove</button>
                 </div>
             )
         }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Product from './Product'
-import { createLineItem, deleteLineItem } from '../store'
+import { createLineItem, deleteLineItem, incrementLineItem, decrementLineItem } from '../store'
 
 class Order extends React.Component{
     constructor(){
@@ -13,15 +13,21 @@ class Order extends React.Component{
     }
 
     render(){
-        const {products, createLineItem, deleteLineItem } = this.props
+        const {products, createLineItem, deleteLineItem, incrementLineItem, decrementLineItem} = this.props
         const cart = this.findCart() || {}
         const lineItems = cart.lineItems? cart.lineItems : []
+        // console.log(lineItems)
         
         return (
             <div>
                 {products.map(product => {
-                    const currentProductCount = lineItems.filter(lineItem => lineItem.productId === product.id)
-                    return <Product key={product.id} product={product} createLineItem={createLineItem} deleteLineItem={deleteLineItem} orderId={cart.id} lineItems={currentProductCount}/>
+                    //console.log(product)
+                    const currentLineItem = lineItems.find(lineItem => {
+                        //console.log(lineItem)
+                        return lineItem.productId === product.id
+                    }) || {}
+                   // console.log(currentLineItem)
+                    return <Product key={product.id} product={product} createLineItem={createLineItem} deleteLineItem={deleteLineItem} increment={incrementLineItem} decrement={decrementLineItem} orderId={cart.id} lineItem={currentLineItem}/>
                 })}
             </div>
         )
@@ -38,8 +44,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createLineItem : (productId, orderId) => dispatch(createLineItem(productId, orderId)),
-        deleteLineItem : (orderId, id) => dispatch(deleteLineItem(orderId, id))
-
+        deleteLineItem : (orderId, id) => dispatch(deleteLineItem(orderId, id)),
+        incrementLineItem : lineItem => dispatch(incrementLineItem(lineItem)),
+        decrementLineItem: lineItem => dispatch(decrementLineItem(lineItem))
     }
 }
 
