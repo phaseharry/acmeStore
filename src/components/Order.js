@@ -7,16 +7,23 @@ class Order extends React.Component{
     constructor(){
         super()
         this.findCart = this.findCart.bind(this)
+        this.findTotal = this.findTotal.bind(this)
     }
     findCart(){
         return this.props.orders.find(order => order.status === 'CART')
+    }
+    findTotal(lineItems){
+        return lineItems.reduce((total, item) => {
+            return total + item.quantity
+        }, 0)
     }
     render(){
         const {products, createLineItem, deleteLineItem, incrementLineItem, decrementLineItem, submitOrder, history} = this.props
         const cart = this.findCart() || {}
         console.log(cart)
         const lineItems = cart.lineItems? cart.lineItems : []
-        // console.log(lineItems)
+        const total = this.findTotal(lineItems)
+        console.log(total)
         return (
             <div>
                 <h4>Products</h4>
@@ -31,7 +38,7 @@ class Order extends React.Component{
                         return <Product key={product.id} product={product} createLineItem={createLineItem} deleteLineItem={deleteLineItem} increment={incrementLineItem} decrement={decrementLineItem} orderId={cart.id} lineItem={currentLineItem}/>
                     })}
                 </div>
-                <button className='btn btn-primary' id='submitButton' type='button' onClick={() => submitOrder(cart, history)}>Submit Order</button>
+                <button className='btn btn-primary' id='submitButton' type='button' disabled={total > 0? false : true} onClick={() => submitOrder(cart, history)}>Submit Order</button>
             </div>
         )
     }
