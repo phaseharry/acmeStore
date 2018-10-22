@@ -40,8 +40,9 @@ class NavBar extends React.Component{
 }
 
 const mapStateToProps = state => {
+    const { store } = state
     return {
-        orders: state.orders,
+        orders: store.orders,
     }
 }
 

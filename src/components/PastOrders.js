@@ -22,9 +22,10 @@ class PastOrders extends React.Component{
 }
 
 const mapStateToProps = state => {
+    const { store } = state
     return {
-        orders: state.orders,
-        products: state.products
+        orders: store.orders,
+        products: store.products
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Product from './Product'
-import { createLineItem, deleteLineItem, incrementLineItem, decrementLineItem, submitOrder } from '../store'
+import { createLineItem, deleteLineItem, incrementLineItem, decrementLineItem, submitOrder } from '../reducers/Products'
 
 class Order extends React.Component{
     constructor(){
@@ -45,9 +45,10 @@ class Order extends React.Component{
 }
 
 const mapStateToProps = state => {
+        const { store } = state
     return {
-        products: state.products,
-        orders: state.orders
+        products: store.products,
+        orders: store.orders
     }
 }
 

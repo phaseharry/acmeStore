@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {loadData} from '../store'
+import {loadData} from '../reducers/Products'
 import NavBar from './NavBar'
 import Order from './Order'
 import PastOrders from './PastOrders'
@@ -46,9 +46,10 @@ class Main extends React.Component{
 }
 
 const mapStateToProps = state => {
+    const { auth, store } = state
     return {
-        products: state.products,
-        orders: state.orders
+        products: store.products,
+        orders: store.orders
     }
 }
 
